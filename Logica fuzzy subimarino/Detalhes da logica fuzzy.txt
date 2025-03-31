@@ -1,0 +1,10 @@
+Velocidade (0km/h,24.5km/h)[Parado,Normal,Media,veloz,Muito rapido]
+temperatura (Hambiente,quente,muito quente,Superaquecimento)
+Taxa de fissão () {Potência máxima de saída 3.500 kW}
+Saída da turbina
+Nivel de Bateria ()
+
+Fuzzificação: Funções Triangulares
+Defuzzificação: média ou máximos.
+
+
