@@ -16,5 +16,10 @@ namespace Logica_fuzzy_subimarino
         {
             InitializeComponent();
         }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            textBox1.Text = hScrollBar1.Value.ToString();
+        }
     }
 }
