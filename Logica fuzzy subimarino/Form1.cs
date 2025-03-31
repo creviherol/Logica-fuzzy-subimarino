@@ -14,6 +14,10 @@ namespace Logica_fuzzy_subimarino
     {
         int RateFission;
         int Tubine;
+        int FuelPotential = 80;
+        int HeatSupply;
+        int CalorTubine;
+        int Estabilida;
         public Form1()
         {
             InitializeComponent();
@@ -29,6 +33,16 @@ namespace Logica_fuzzy_subimarino
         {
             Tubine = hScrollBar2.Value;
             textBox2.Text = "Tubina:" + Tubine.ToString();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            HeatSupply = (FuelPotential * 2 * RateFission);
+            CalorTubine = (Tubine * 75);
+            Estabilida = (HeatSupply/2) - CalorTubine;
+            textBox3.Text = "Calor gerado:" + (HeatSupply);
+            textBox4.Text = "Calor Tubina:" + (CalorTubine);
+            textBox5.Text = "Estabilidade:" + (Estabilida);
         }
     }
 }
