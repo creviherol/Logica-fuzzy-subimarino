@@ -30,6 +30,8 @@
         {
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.hScrollBar2 = new System.Windows.Forms.HScrollBar();
             this.SuspendLayout();
             // 
             // hScrollBar1
@@ -43,10 +45,28 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(45, 113);
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(630, 57);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 1;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Enabled = false;
+            this.textBox2.Location = new System.Drawing.Point(630, 96);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.TabIndex = 2;
+            // 
+            // hScrollBar2
+            // 
+            this.hScrollBar2.LargeChange = 1;
+            this.hScrollBar2.Location = new System.Drawing.Point(45, 93);
+            this.hScrollBar2.Name = "hScrollBar2";
+            this.hScrollBar2.Size = new System.Drawing.Size(562, 23);
+            this.hScrollBar2.TabIndex = 3;
+            this.hScrollBar2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar2_Scroll);
             // 
             // Form1
             // 
@@ -54,6 +74,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Logica_fuzzy_subimarino.Properties.Resources.Fundo1;
             this.ClientSize = new System.Drawing.Size(1366, 768);
+            this.Controls.Add(this.hScrollBar2);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.hScrollBar1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -69,6 +91,8 @@
 
         private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.HScrollBar hScrollBar2;
     }
 }
 
