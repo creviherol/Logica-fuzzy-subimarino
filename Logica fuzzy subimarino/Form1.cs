@@ -14,10 +14,12 @@ namespace Logica_fuzzy_subimarino
     {
         int RateFission;
         int Tubine;
-        int FuelPotential = 80;
+        int FuelPotential = 160;
         int HeatSupply;
         int CalorTubine;
         int Estabilida;
+        int Carga = 0;
+        int Powermax = 3500;
         public Form1()
         {
             InitializeComponent();
@@ -43,6 +45,8 @@ namespace Logica_fuzzy_subimarino
             textBox3.Text = "Calor gerado:" + (HeatSupply);
             textBox4.Text = "Calor Tubina:" + (CalorTubine);
             textBox5.Text = "Estabilidade:" + (Estabilida);
+            textBox6.Text = "Diferença de carga turbina:" + (((Powermax*Tubine)/100)-Carga);
+            textBox7.Text = "Diferença de carga reator:" + (((Powermax * FuelPotential * RateFission) / 7500) - Carga);
         }
     }
 }
