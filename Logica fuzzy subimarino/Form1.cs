@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Ports;
+using System.Threading;
 
 namespace Logica_fuzzy_subimarino
 {
@@ -20,9 +22,14 @@ namespace Logica_fuzzy_subimarino
         int Estabilida;
         int Carga = 0;
         int Powermax = 3500;
+        int DR;
+        int DT;
+        SerialPort portaSerial = new SerialPort("COM11", 9600); 
+        
         public Form1()
         {
             InitializeComponent();
+            portaSerial.Open();
         }
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
@@ -39,14 +46,29 @@ namespace Logica_fuzzy_subimarino
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+
             HeatSupply = (FuelPotential * 2 * RateFission);
             CalorTubine = (Tubine * 75);
             Estabilida = (HeatSupply/2) - CalorTubine;
+            DR = (((Powermax * FuelPotential * RateFission) / 7500) - Carga);
+            DT = (((Powermax * Tubine) / 100) - Carga);
             textBox3.Text = "Calor gerado:" + (HeatSupply);
             textBox4.Text = "Calor Tubina:" + (CalorTubine);
             textBox5.Text = "Estabilidade:" + (Estabilida);
-            textBox6.Text = "Diferença de carga turbina:" + (((Powermax*Tubine)/100)-Carga);
-            textBox7.Text = "Diferença de carga reator:" + (((Powermax * FuelPotential * RateFission) / 7500) - Carga);
+            textBox6.Text = "Diferença de carga turbina:" + DT;
+            textBox7.Text = "Diferença de carga reator:" + DR;
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string mensagem = DR + ";" + DT + ";" + Estabilida;
+            portaSerial.WriteLine(mensagem);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
