@@ -26,6 +26,10 @@ namespace Logica_fuzzy_subimarino
         double DT;
         int ConvReator;
         int ConvTurbina;
+        bool ativo = false;
+
+       
+
         SerialPort portaSerial = new SerialPort("COM11", 9600); 
         
         public Form1()
@@ -76,23 +80,30 @@ namespace Logica_fuzzy_subimarino
                 ConvReator = (int)(double.Parse(partes[0]));
                 ConvTurbina = (int)(double.Parse(partes[1]));
                 textBox5.Text = ConvReator.ToString();
-                hScrollBar1.Value += ConvReator;
-                hScrollBar2.Value += ConvTurbina;
+                hScrollBar1.Value = Math.Max(hScrollBar1.Minimum, Math.Min(hScrollBar1.Maximum,(hScrollBar1.Value + ConvReator) )); 
+                hScrollBar2.Value = Math.Max(hScrollBar2.Minimum, Math.Min(hScrollBar2.Maximum, (hScrollBar2.Value + ConvTurbina))); 
                 string mensagem = DR + ";" + DT + ";" + Temperatura;
                 portaSerial.WriteLine(mensagem);
             }
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
-            string mensagem = DR + ";" + DT + ";" + Temperatura;
-            portaSerial.WriteLine(mensagem);
-        }
+            ativo = !ativo; // Alterna entre ligado e desligado
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            timer1.Enabled = !timer1.Enabled;
+            if (ativo)
+            {
+                button3.BackgroundImage = Properties.Resources.Botaoligado;
+                timer1.Enabled = !timer1.Enabled;
+                string mensagem = DR + ";" + DT + ";" + Temperatura;
+                portaSerial.WriteLine(mensagem);
+            }
+            else
+            {
+                button3.BackgroundImage = Properties.Resources.Botaodesligado;
+                timer1.Enabled = !timer1.Enabled;
+            }
         }
     }
 }
