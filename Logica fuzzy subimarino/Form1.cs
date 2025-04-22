@@ -27,7 +27,6 @@ namespace Logica_fuzzy_subimarino
         int ConvReator;
         int ConvTurbina;
         bool ativo = false;
-
        
 
         SerialPort portaSerial = new SerialPort("COM11", 9600); 
@@ -104,6 +103,22 @@ namespace Logica_fuzzy_subimarino
                 button3.BackgroundImage = Properties.Resources.Botaodesligado;
                 timer1.Enabled = !timer1.Enabled;
             }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            pictureBox4.Parent = pictureBox5;
+            pictureBox6.Parent = pictureBox3;
+            pictureBox4.BackColor = Color.Transparent;
+            pictureBox6.BackColor = Color.Transparent;
+            int reatorcursor = Map(hScrollBar1.Value);
+            int turbinacursor = Map(hScrollBar2.Value);
+            pictureBox4.Location = new Point(reatorcursor, 5); // relativo ao pictureBox1 agora
+            pictureBox6.Location = new Point(turbinacursor, 5); // relativo ao pictureBox1 agora
+        }
+        public static int Map(int value)
+        {
+            return (value - 0) * (415 - 15) / (10000 - 0) + 15;
         }
     }
 }

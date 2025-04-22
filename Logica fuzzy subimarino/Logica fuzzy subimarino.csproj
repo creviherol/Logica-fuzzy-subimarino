@@ -92,5 +92,14 @@
   <ItemGroup>
     <None Include="Resources\Image1.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\POTENCIOMETRO.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\scrollbar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\cursor.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
