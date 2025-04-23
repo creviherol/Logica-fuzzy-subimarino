@@ -16,7 +16,7 @@ namespace Logica_fuzzy_subimarino
     {
         double RateFission;
         double Tubine;
-        double FuelPotential = 80;
+        double FuelPotential = 100;
         double HeatSupply;
         double CalorTubine;
         double Temperatura;
@@ -27,14 +27,19 @@ namespace Logica_fuzzy_subimarino
         int ConvReator;
         int ConvTurbina;
         bool ativo = false;
-       
-
+        private float angle = 0;
+        private Bitmap originalImage;
         SerialPort portaSerial = new SerialPort("COM11", 9600); 
         
         public Form1()
         {
             InitializeComponent();
             portaSerial.Open();
+            originalImage = new Bitmap("D:\\facudade\\sexto_periodo\\Inteligencia_artificial\\Logica_fuzzy\\Logica fuzzy subimarino\\Logica fuzzy subimarino\\Imgs\\ponteiro.png");
+            pictureBox7.BackgroundImage = originalImage;
+            pictureBox8.BackgroundImage = originalImage;
+            RotateImage(-90, EventArgs.Empty);
+            RotateImage1(-90, EventArgs.Empty);
         }
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
@@ -42,6 +47,7 @@ namespace Logica_fuzzy_subimarino
             RateFission = hScrollBar1.Value;
             RateFission = RateFission / 100;
             textBox1.Text = "Taxa de fissão:" + RateFission;
+
         }
 
         private void hScrollBar2_Scroll(object sender, ScrollEventArgs e)
@@ -109,16 +115,63 @@ namespace Logica_fuzzy_subimarino
         {
             pictureBox4.Parent = pictureBox5;
             pictureBox6.Parent = pictureBox3;
+            pictureBox7.Parent = pictureBox1;
+            pictureBox8.Parent = pictureBox2;
             pictureBox4.BackColor = Color.Transparent;
             pictureBox6.BackColor = Color.Transparent;
-            int reatorcursor = Map(hScrollBar1.Value);
-            int turbinacursor = Map(hScrollBar2.Value);
+            pictureBox7.BackColor = Color.Transparent;
+            pictureBox8.BackColor = Color.Transparent;
+            int reatorcursor = Map(hScrollBar2.Value);
+            int turbinacursor = Map(hScrollBar1.Value);
+            float anguloreator = Map1(hScrollBar1.Value);
+            float anguloturbina = Map1(hScrollBar2.Value);
+            RotateImage(anguloreator, EventArgs.Empty);
+            RotateImage1(anguloturbina, EventArgs.Empty);
             pictureBox4.Location = new Point(reatorcursor, 5); // relativo ao pictureBox1 agora
             pictureBox6.Location = new Point(turbinacursor, 5); // relativo ao pictureBox1 agora
+            pictureBox7.Location = new Point(160,55); // relativo ao pictureBox1 agora
+            pictureBox8.Location = new Point(160, 55); // relativo ao pictureBox1 agora
+
         }
+
         public static int Map(int value)
         {
-            return (value - 0) * (415 - 15) / (10000 - 0) + 15;
+            return (value  * 400 / 10000) + 15;
+        }
+        public static float Map1(float value)
+        {
+            return (value * 169 / 10000 ) - 90;
+        }
+
+        private void RotateImage(float angle, EventArgs e)
+        {
+            if (angle >= 360) angle = 0;
+
+            // Cria uma nova imagem girada
+            Bitmap rotatedImage = new Bitmap(originalImage.Height+500, originalImage.Height+500);
+            using (Graphics g = Graphics.FromImage(rotatedImage))
+            {
+                g.TranslateTransform(originalImage.Height/2, 145);
+                g.RotateTransform(angle);
+                g.TranslateTransform(-originalImage.Width/2, -145);
+                g.DrawImage(originalImage, new Point(10,0));
+            }
+            pictureBox7.BackgroundImage = rotatedImage;
+        }
+        private void RotateImage1(float angle, EventArgs e)
+        {
+            if (angle >= 360) angle = 0;
+
+            // Cria uma nova imagem girada
+            Bitmap rotatedImage = new Bitmap(originalImage.Height + 500, originalImage.Height + 500);
+            using (Graphics g = Graphics.FromImage(rotatedImage))
+            {
+                g.TranslateTransform(originalImage.Height / 2, 145);
+                g.RotateTransform(angle);
+                g.TranslateTransform(-originalImage.Width / 2, -145);
+                g.DrawImage(originalImage, new Point(10, 0));
+            }
+            pictureBox8.BackgroundImage = rotatedImage;
         }
     }
 }
