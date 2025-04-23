@@ -113,6 +113,26 @@ namespace Logica_fuzzy_subimarino.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap painel_de_valores {
+            get {
+                object obj = ResourceManager.GetObject("painel de valores", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Painelgrafico {
+            get {
+                object obj = ResourceManager.GetObject("Painelgrafico", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ponteiro {
             get {
                 object obj = ResourceManager.GetObject("ponteiro", resourceCulture);

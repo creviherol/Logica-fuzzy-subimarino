@@ -107,5 +107,11 @@
   <ItemGroup>
     <None Include="Imgs\medidortemperatura.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\painel de valores.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Painelgrafico.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

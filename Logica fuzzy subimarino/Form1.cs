@@ -26,11 +26,10 @@ namespace Logica_fuzzy_subimarino
         double DT;
         int ConvReator;
         int ConvTurbina;
-        bool ativo = false;
-        private float angle = 0;
+        bool ativo = false;   
         private Bitmap originalImage;
-        SerialPort portaSerial = new SerialPort("COM11", 9600); 
-        
+        SerialPort portaSerial = new SerialPort("COM11", 9600);
+
         public Form1()
         {
             InitializeComponent();
@@ -40,51 +39,53 @@ namespace Logica_fuzzy_subimarino
             pictureBox8.BackgroundImage = originalImage;
             RotateImage(-90, EventArgs.Empty);
             RotateImage1(-90, EventArgs.Empty);
+            label5.Parent = pictureBox10;
+            label5.BackColor = Color.Transparent;
+            label5.Location = new Point(15,30);
+            label6.Parent = pictureBox11;
+            label6.BackColor = Color.Transparent;
+            label6.Location = new Point(15, 30);
+            pictureBox4.Parent = pictureBox5;
+            pictureBox6.Parent = pictureBox3;
+            pictureBox7.Parent = pictureBox1;
+            pictureBox8.Parent = pictureBox2;
+            pictureBox4.BackColor = Color.Transparent;
+            pictureBox6.BackColor = Color.Transparent;
+            pictureBox7.BackColor = Color.Transparent;
+            pictureBox8.BackColor = Color.Transparent;
         }
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
             RateFission = hScrollBar1.Value;
             RateFission = RateFission / 100;
-            textBox1.Text = "Taxa de fissão:" + RateFission;
-
         }
 
         private void hScrollBar2_Scroll(object sender, ScrollEventArgs e)
         {
             Tubine = hScrollBar2.Value;
             Tubine = Tubine / 100;
-            textBox2.Text = "Tubina:" + Tubine;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             DR = (((Powermax * FuelPotential * RateFission) / 7500) - Carga);
             DT = (((Powermax * Tubine) / 100) - Carga);
-            textBox3.Text = "Calor gerado:" + HeatSupply;
-            textBox4.Text = "Calor Tubina:" + (CalorTubine);
-            textBox6.Text = "Diferença de carga turbina:" + DT;
-            textBox7.Text = "Diferença de carga reator:" + DR;
-            textBox10.Text ="Temperatura: " + Temperatura;
 
             if (portaSerial.BytesToRead > 0){
                 RateFission = hScrollBar1.Value;
                 RateFission = RateFission / 100;
-                textBox1.Text = "Taxa de fissão:" + RateFission;
                 Tubine = hScrollBar2.Value;
                 Tubine = Tubine / 100;
-                textBox2.Text = "Tubina:" + Tubine;
                 string dado = portaSerial.ReadLine();
                 string[] partes = dado.Split(';');
-                textBox8.Text = partes[0];
-                textBox9.Text = partes[1];
                 ConvReator = (int)(double.Parse(partes[0]));
                 ConvTurbina = (int)(double.Parse(partes[1]));
-                textBox5.Text = ConvReator.ToString();
                 hScrollBar1.Value = Math.Max(hScrollBar1.Minimum, Math.Min(hScrollBar1.Maximum,(hScrollBar1.Value + ConvReator) )); 
                 hScrollBar2.Value = Math.Max(hScrollBar2.Minimum, Math.Min(hScrollBar2.Maximum, (hScrollBar2.Value + ConvTurbina))); 
                 string mensagem = DR + ";" + DT + ";" + Temperatura;
                 portaSerial.WriteLine(mensagem);
+
             }
 
         }
@@ -112,15 +113,9 @@ namespace Logica_fuzzy_subimarino
             HeatSupply = (FuelPotential / 100) * 2 * RateFission;
             CalorTubine = (Tubine);
             Temperatura = HeatSupply - CalorTubine;
+            label5.Text = RateFission.ToString("0.00") + " %";
+            label6.Text = Tubine.ToString("0.00") + " %";
             Medidortemp(Temperatura,panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9, panel10, panel11, panel12, panel13, panel14);
-            pictureBox4.Parent = pictureBox5;
-            pictureBox6.Parent = pictureBox3;
-            pictureBox7.Parent = pictureBox1;
-            pictureBox8.Parent = pictureBox2;
-            pictureBox4.BackColor = Color.Transparent;
-            pictureBox6.BackColor = Color.Transparent;
-            pictureBox7.BackColor = Color.Transparent;
-            pictureBox8.BackColor = Color.Transparent;
             int reatorcursor = Map(hScrollBar2.Value);
             int turbinacursor = Map(hScrollBar1.Value);
             float anguloreator = Map1(hScrollBar1.Value);
