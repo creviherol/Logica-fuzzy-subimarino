@@ -59,10 +59,6 @@ namespace Logica_fuzzy_subimarino
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-
-            HeatSupply = (FuelPotential/100) * 2 * RateFission;
-            CalorTubine = (Tubine);
-            Temperatura = HeatSupply - CalorTubine;
             DR = (((Powermax * FuelPotential * RateFission) / 7500) - Carga);
             DT = (((Powermax * Tubine) / 100) - Carga);
             textBox3.Text = "Calor gerado:" + HeatSupply;
@@ -113,6 +109,10 @@ namespace Logica_fuzzy_subimarino
 
         private void timer2_Tick(object sender, EventArgs e)
         {
+            HeatSupply = (FuelPotential / 100) * 2 * RateFission;
+            CalorTubine = (Tubine);
+            Temperatura = HeatSupply - CalorTubine;
+            Medidortemp(Temperatura,panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9, panel10, panel11, panel12, panel13, panel14);
             pictureBox4.Parent = pictureBox5;
             pictureBox6.Parent = pictureBox3;
             pictureBox7.Parent = pictureBox1;
@@ -131,7 +131,6 @@ namespace Logica_fuzzy_subimarino
             pictureBox6.Location = new Point(turbinacursor, 5); // relativo ao pictureBox1 agora
             pictureBox7.Location = new Point(160,55); // relativo ao pictureBox1 agora
             pictureBox8.Location = new Point(160, 55); // relativo ao pictureBox1 agora
-
         }
 
         public static int Map(int value)
@@ -141,6 +140,133 @@ namespace Logica_fuzzy_subimarino
         public static float Map1(float value)
         {
             return (value * 169 / 10000 ) - 90;
+        }
+        private static int Medidortemp(double graus, Panel panel1, Panel panel2, Panel panel3, Panel panel4, Panel panel5, Panel panel6, Panel panel7, Panel panel8,
+            Panel panel9, Panel panel10, Panel panel11, Panel panel12, Panel panel13, Panel panel14)
+        {
+            if (graus <= 0)
+            {
+                graus = 0;
+            }
+            else if (graus > 100)
+            {
+                graus = 100;
+            }
+
+            if (graus > 1)
+            {
+                panel1.Visible = true;
+            }
+            else 
+            {
+                panel1.Visible = false;
+            }
+
+            if (graus > 8)
+            {
+                panel2.Visible = true;
+            }
+            else 
+            {
+                panel2.Visible = false;
+            }
+            if (graus > 15)
+            {
+                panel3.Visible = true;
+            }
+            else
+            {
+                panel3.Visible = false;
+            }
+            if (graus > 22)
+            {
+                panel4.Visible = true;
+            }
+            else
+            {
+                panel4.Visible = false;
+            }
+            if (graus > 29)
+            {
+                panel5.Visible = true;
+            }
+            else
+            {
+                panel5.Visible = false;
+            }
+            if (graus > 36)
+            {
+                panel6.Visible = true;
+            }
+            else
+            {
+                panel6.Visible = false;
+            }
+            if (graus > 43)
+            {
+                panel7.Visible = true;
+            }
+            else
+            {
+                panel7.Visible = false;
+            }
+            if (graus > 50)
+            {
+                panel8.Visible = true;
+            }
+            else
+            {
+                panel8.Visible = false;
+            }
+            if (graus > 57)
+            {
+                panel9.Visible = true;
+            }
+            else
+            {
+                panel9.Visible = false;
+            }
+            if (graus > 64)
+            {
+                panel10.Visible = true;
+            }
+            else
+            {
+                panel10.Visible = false;
+            }
+            if (graus > 71)
+            {
+                panel11.Visible = true;
+            }
+            else
+            {
+                panel11.Visible = false;
+            }
+            if (graus > 78)
+            {
+                panel12.Visible = true;
+            }
+            else
+            {
+                panel12.Visible = false;
+            }
+            if (graus > 85)
+            {
+                panel13.Visible = true;
+            }
+            else
+            {
+                panel13.Visible = false;
+            }
+            if (graus > 92)
+            {
+                panel14.Visible = true;
+            }
+            else
+            {
+                panel14.Visible = false;
+            }
+            return 0;
         }
 
         private void RotateImage(float angle, EventArgs e)
