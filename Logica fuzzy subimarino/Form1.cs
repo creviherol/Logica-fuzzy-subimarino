@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Logica_fuzzy_subimarino
 {
@@ -21,6 +22,7 @@ namespace Logica_fuzzy_subimarino
         double CalorTubine;
         double Temperatura;
         int Carga = 3115;
+        int energia;
         int Powermax = 3500;
         double DR;
         double DT;
@@ -28,6 +30,11 @@ namespace Logica_fuzzy_subimarino
         int ConvTurbina;
         bool ativo = false;   
         private Bitmap originalImage;
+
+        private Chart chart1;
+        private Random rand = new Random(); // Para simular valores
+        private int pointIndex = 0; // Contador de pontos
+
         SerialPort portaSerial = new SerialPort("COM11", 9600);
 
         public Form1()
@@ -53,6 +60,42 @@ namespace Logica_fuzzy_subimarino
             pictureBox6.BackColor = Color.Transparent;
             pictureBox7.BackColor = Color.Transparent;
             pictureBox8.BackColor = Color.Transparent;
+
+            chart1 = new Chart();
+            chart1.Size = new Size(530, 300);
+            chart1.Location = new Point(10, 20);
+            this.Controls.Add(chart1);
+            chart1.BringToFront(); // Traz o Chart para a frente de outros controles
+            chart1.Parent = pictureBox12;
+            chart1.BackColor = Color.Transparent;
+
+            // Configura a área do gráfico
+            ChartArea chartArea = new ChartArea("MainArea");
+            chart1.ChartAreas.Add(chartArea);
+            chartArea.BackColor = Color.Transparent; // Fundo da ChartArea transparente
+            chartArea.AxisY.Minimum = 0; // Ajuste conforme sua variável
+            chartArea.AxisY.Maximum = 3500; // Ajuste conforme sua variável
+            chartArea.AxisX.MajorGrid.LineColor = Color.Green; // Cor da grade
+            chartArea.AxisY.MajorGrid.LineColor = Color.Green; // Cor da grade
+            chartArea.AxisX.LineColor = Color.Green; // Cor do eixo X
+            chartArea.AxisY.LineColor = Color.Green; // Cor do eixo Y
+            chartArea.AxisY.LabelStyle.ForeColor = Color.Green; // Números do eixo Y verdes
+            chartArea.AxisX.LabelStyle.Enabled = false; // Remove números do eixo X
+
+            // Configura a série
+            Series series = new Series("Dados");
+            series.ChartType = SeriesChartType.Line;
+            series.BorderWidth = 4;
+            series.Color = System.Drawing.Color.Blue;
+            chart1.Series.Add(series);
+
+            // Configura a série
+            Series series2 = new Series("Dados2");
+            series2.ChartType = SeriesChartType.Line;
+            series2.BorderWidth = 4;
+            series2.Color = System.Drawing.Color.Yellow;
+            chart1.Series.Add(series2);
+            
         }
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
@@ -126,6 +169,27 @@ namespace Logica_fuzzy_subimarino
             pictureBox6.Location = new Point(turbinacursor, 5); // relativo ao pictureBox1 agora
             pictureBox7.Location = new Point(160,55); // relativo ao pictureBox1 agora
             pictureBox8.Location = new Point(160, 55); // relativo ao pictureBox1 agora
+            energia = (int)((Powermax * Tubine) / 100);
+
+            // Adiciona um novo ponto (simulado com Random para exemplo)
+            // Substitua pelo valor da sua variável
+            double newValue = energia;
+            double newValue2 = Carga;
+            chart1.Series["Dados"].Points.AddXY(pointIndex, newValue);
+            chart1.Series["Dados2"].Points.AddXY(pointIndex, newValue2);
+            pointIndex++; // Incrementa o índice para ambas as séries
+            // Limita o número de pontos exibidos (para evitar sobrecarga)
+            if (chart1.Series["Dados"].Points.Count > 50) // Mostra até 50 pontos
+            {
+                chart1.Series["Dados"].Points.RemoveAt(0); // Remove o ponto mais antigo
+                chart1.Series["Dados2"].Points.RemoveAt(0); // Remove o ponto mais antigo da segunda série
+                // Ajusta o eixo X para rolar o gráfico
+                chart1.ChartAreas[0].AxisX.Minimum = pointIndex - 50;
+                chart1.ChartAreas[0].AxisX.Maximum = pointIndex;
+            }
+
+            // Atualiza o gráfico
+            chart1.Invalidate();
         }
 
         public static int Map(int value)
