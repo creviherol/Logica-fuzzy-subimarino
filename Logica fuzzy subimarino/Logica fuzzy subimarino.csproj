@@ -114,5 +114,11 @@
   <ItemGroup>
     <None Include="Imgs\Painelgrafico.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\laiser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\icondelaiser.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

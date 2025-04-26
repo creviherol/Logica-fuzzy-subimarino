@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Data.Common;
 
 namespace Logica_fuzzy_subimarino
 {
@@ -21,7 +22,8 @@ namespace Logica_fuzzy_subimarino
         double HeatSupply;
         double CalorTubine;
         double Temperatura;
-        int Carga = 3115;
+        double Combustivel = 100;
+        int Carga = 0;
         int energia;
         int Powermax = 3500;
         double DR;
@@ -52,6 +54,9 @@ namespace Logica_fuzzy_subimarino
             label6.Parent = pictureBox11;
             label6.BackColor = Color.Transparent;
             label6.Location = new Point(15, 30);
+            label8.Parent = pictureBox13;
+            label8.BackColor = Color.Transparent;
+            label8.Location = new Point(15, 30);
             pictureBox4.Parent = pictureBox5;
             pictureBox6.Parent = pictureBox3;
             pictureBox7.Parent = pictureBox1;
@@ -60,6 +65,7 @@ namespace Logica_fuzzy_subimarino
             pictureBox6.BackColor = Color.Transparent;
             pictureBox7.BackColor = Color.Transparent;
             pictureBox8.BackColor = Color.Transparent;
+            textBox2.KeyDown += new KeyEventHandler(textBox2_KeyDown);
 
             chart1 = new Chart();
             chart1.Size = new Size(530, 300);
@@ -156,8 +162,10 @@ namespace Logica_fuzzy_subimarino
             HeatSupply = (FuelPotential / 100) * 2 * RateFission;
             CalorTubine = (Tubine);
             Temperatura = HeatSupply - CalorTubine;
+            Combustivel = Combustivel-((0.3*RateFission)/1000);
             label5.Text = RateFission.ToString("0.00") + " %";
             label6.Text = Tubine.ToString("0.00") + " %";
+            label8.Text = Combustivel.ToString("0.00") + " %";
             Medidortemp(Temperatura,panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9, panel10, panel11, panel12, panel13, panel14);
             int reatorcursor = Map(hScrollBar2.Value);
             int turbinacursor = Map(hScrollBar1.Value);
@@ -170,6 +178,14 @@ namespace Logica_fuzzy_subimarino
             pictureBox7.Location = new Point(160,55); // relativo ao pictureBox1 agora
             pictureBox8.Location = new Point(160, 55); // relativo ao pictureBox1 agora
             energia = (int)((Powermax * Tubine) / 100);
+
+            if (pictureBox15.Width >= 10)
+            {
+                if (pictureBox15.Width <= 556) 
+                {
+                    pictureBox15.Width += (int)(RateFission*0.03);
+                }
+            }
 
             // Adiciona um novo ponto (simulado com Random para exemplo)
             // Substitua pelo valor da sua variável
@@ -357,6 +373,29 @@ namespace Logica_fuzzy_subimarino
                 g.DrawImage(originalImage, new Point(10, 0));
             }
             pictureBox8.BackgroundImage = rotatedImage;
+        }
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (pictureBox15.Width >= 110)
+            {
+                pictureBox15.Width = pictureBox15.Width - 100;
+            }
+        }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                if (int.TryParse(textBox2.Text, out int valor))
+                {
+                    Carga = valor;
+                    textBox2.Clear();
+                }
+                else
+                {
+                    MessageBox.Show("Valor inválido. Por favor, insira um número inteiro.");
+                }
+            }
         }
     }
 }

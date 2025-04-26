@@ -103,6 +103,26 @@ namespace Logica_fuzzy_subimarino.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icondelaiser {
+            get {
+                object obj = ResourceManager.GetObject("icondelaiser", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap laiser {
+            get {
+                object obj = ResourceManager.GetObject("laiser", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap medidortemperatura {
             get {
                 object obj = ResourceManager.GetObject("medidortemperatura", resourceCulture);
