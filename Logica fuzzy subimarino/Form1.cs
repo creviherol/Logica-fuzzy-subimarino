@@ -32,7 +32,7 @@ namespace Logica_fuzzy_subimarino
         int ConvTurbina;
         bool ativo = false;   
         private Bitmap originalImage;
-
+        int sever = 0;
         private Chart chart1;
         private Random rand = new Random(); // Para simular valores
         private int pointIndex = 0; // Contador de pontos
@@ -43,6 +43,7 @@ namespace Logica_fuzzy_subimarino
         {
             InitializeComponent();
             portaSerial.Open();
+            esp32.Open();
             originalImage = new Bitmap("D:\\facudade\\sexto_periodo\\Inteligencia_artificial\\Logica_fuzzy\\Logica fuzzy subimarino\\Logica fuzzy subimarino\\Imgs\\ponteiro.png");
             pictureBox7.BackgroundImage = originalImage;
             pictureBox8.BackgroundImage = originalImage;
@@ -66,6 +67,7 @@ namespace Logica_fuzzy_subimarino
             pictureBox7.BackColor = Color.Transparent;
             pictureBox8.BackColor = Color.Transparent;
             textBox2.KeyDown += new KeyEventHandler(textBox2_KeyDown);
+            esp32.DataReceived += new SerialDataReceivedEventHandler(esp32_DataReceived);
 
             chart1 = new Chart();
             chart1.Size = new Size(530, 300);
@@ -178,6 +180,7 @@ namespace Logica_fuzzy_subimarino
             pictureBox7.Location = new Point(160,55); // relativo ao pictureBox1 agora
             pictureBox8.Location = new Point(160, 55); // relativo ao pictureBox1 agora
             energia = (int)((Powermax * Tubine) / 100);
+            
 
             if (pictureBox15.Width >= 10)
             {
@@ -216,6 +219,7 @@ namespace Logica_fuzzy_subimarino
         {
             return (value * 169 / 10000 ) - 90;
         }
+        
         private static int Medidortemp(double graus, Panel panel1, Panel panel2, Panel panel3, Panel panel4, Panel panel5, Panel panel6, Panel panel7, Panel panel8,
             Panel panel9, Panel panel10, Panel panel11, Panel panel12, Panel panel13, Panel panel14)
         {
@@ -396,6 +400,12 @@ namespace Logica_fuzzy_subimarino
                     MessageBox.Show("Valor inválido. Por favor, insira um número inteiro.");
                 }
             }
+        }
+
+        private void esp32_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            string data = esp32.ReadLine();
+            Carga = int.Parse(data);
         }
     }
 }
